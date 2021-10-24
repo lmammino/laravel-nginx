@@ -1,8 +1,8 @@
 # laravel-nginx
 
 [![Publish Docker image](https://github.com/lmammino/laravel-nginx/actions/workflows/publish.yml/badge.svg)](https://github.com/lmammino/laravel-nginx/actions/workflows/publish.yml)
-[![On Docker Hub](https://img.shields.io/docker/stars/loige/laravel-nginx?style=for-the-badge)](https://hub.docker.com/r/loige/laravel-nginx)
-[![MIT License](https://img.shields.io/github/license/lmammino/laravel-nginx?style=for-the-badge)](/LICENSE)
+[![On Docker Hub](https://img.shields.io/docker/stars/loige/laravel-nginx)](https://hub.docker.com/r/loige/laravel-nginx)
+[![MIT License](https://img.shields.io/github/license/lmammino/laravel-nginx)](/LICENSE)
 
 A base image for running Laravel apps on Docker.
 
