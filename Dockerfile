@@ -1,3 +1,5 @@
+# syntax=docker/dockerfile:1
+
 ARG platform=linux/amd64
 FROM --platform=$platform php:8-fpm-alpine
 
