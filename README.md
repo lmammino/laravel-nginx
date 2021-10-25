@@ -51,6 +51,21 @@ The image can be configured at build time using build args and at runtime using 
   - `APP_ENV`: if set to "local" will install php dev depencies and run `yarn dev` on start
 
 
+## Advanced configuration
+
+If more advanced configuration is needed, all configuration files can be overridden with explicit `COPY` commands. You could copy the original files from this repo into your own project, change them and then override the original file by adding a `COPY` command to override the file in your container.
+
+This is where the original configuration files are copied:
+
+| **File location in repo** | **File location in container** | **Notes** |
+| --- | --- | --- |
+| [`./config/fastcgi-php.conf`](/config/fastcgi-php.conf) | `/etc/nginx/fastcgi-php.conf` | |
+| [`./config/nginx.conf`](/config/nginx.conf) | `/etc/nginx/nginx.conf` | |
+| [`./config/php-fpm.conf`](/config/php-fpm.conf) | `/usr/local/etc/php/php-fpm.conf` | |
+| [`./config/start.sh`](/config/start.sh) | `/usr/bin/start_app` | Needs to be executable |
+| [`./config/supervisord.ini`](/config/supervisord.ini) | `/etc/supervisor.d/supervisord.ini` | |
+
+
 ## Contributing
 
 Everyone is very welcome to contribute to this project.
@@ -61,3 +76,4 @@ You can contribute just by submitting bugs or suggesting improvements by
 ## License
 
 Licensed under [MIT License](LICENSE). © Luciano Mammino
+

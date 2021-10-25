@@ -7,9 +7,10 @@ php artisan optimize:clear;
 php artisan config:cache;
 
 # If APP_ENV is "local" then allows dev dependencies (e.g. debug bar)
-if [ "$APP_ENV" -eq "local" ]; then
-  composer install --optimize-autoloader
-  yarn run dev
+if [ "$APP_ENV" == "local" ]; then
+  echo "Running composer install and yarn run dev (\$APP_ENV=$APP_ENV)";
+  composer install --optimize-autoloader;
+  yarn run dev;
 fi
 
 # run optimizer
@@ -17,6 +18,7 @@ php artisan optimize;
 
 # run migrations
 if [ -n "$RUN_MIGRATIONS" ]; then
+  echo "Running migrations (\$RUN_MIGRATIONS=$RUN_MIGRATIONS)";
   php artisan migrate --force;
 fi
 
