@@ -48,6 +48,7 @@ The image can be configured at build time using build args and at runtime using 
 ### Environment variables
 
   - `RUN_MIGRATIONS`: if set it will run the migrations at runtime.
+  - `APP_ENV`: if set to "local" will install php dev depencies and run `yarn dev` on start
 
 
 ## Contributing
