@@ -63,7 +63,8 @@ This is where the original configuration files are copied:
 | [`./config/nginx.conf`](/config/nginx.conf) | `/etc/nginx/nginx.conf` | |
 | [`./config/php-fpm.conf`](/config/php-fpm.conf) | `/usr/local/etc/php/php-fpm.conf` | |
 | [`./config/php-fpm.conf`](/config/php.ini) | `/usr/local/etc/php/php.ini` | |
-| [`./config/start.sh`](/config/start.sh) | `/usr/bin/start_app` | Needs to be executable |
+| [`./config/start.sh`](/config/start.sh) | `/usr/bin/start.sh` | Needs to be executable |
+| [`./config/nginx-healthcheck.sh`](/config/nginx-healthcheck.sh) | `/usr/bin/nginx-healthcheck.sh` | Needs to be executable |
 | [`./config/supervisord.ini`](/config/supervisord.ini) | `/etc/supervisor.d/supervisord.ini` | |
 
 
