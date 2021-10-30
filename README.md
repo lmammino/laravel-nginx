@@ -48,7 +48,7 @@ The image can be configured at build time using build args and at runtime using 
 ### Environment variables
 
   - `RUN_MIGRATIONS`: if set it will run the migrations at runtime.
-  - `APP_ENV`: if set to "local" will install php dev depencies and run `yarn dev` on start
+  - `INSTALL_DEV_DEPS_AT_RUNTIME`: if set set then allows dev dependencies (e.g. debug bar) and run `yarn run dev`
 
 
 ## Advanced configuration
@@ -62,8 +62,62 @@ This is where the original configuration files are copied:
 | [`./config/fastcgi-php.conf`](/config/fastcgi-php.conf) | `/etc/nginx/fastcgi-php.conf` | |
 | [`./config/nginx.conf`](/config/nginx.conf) | `/etc/nginx/nginx.conf` | |
 | [`./config/php-fpm.conf`](/config/php-fpm.conf) | `/usr/local/etc/php/php-fpm.conf` | |
+| [`./config/php-fpm.conf`](/config/php.ini) | `/usr/local/etc/php/php.ini` | |
 | [`./config/start.sh`](/config/start.sh) | `/usr/bin/start_app` | Needs to be executable |
 | [`./config/supervisord.ini`](/config/supervisord.ini) | `/etc/supervisor.d/supervisord.ini` | |
+
+
+## Testing the image
+
+A sample `index.php` file is automatically created in `/app/public/index.php`.
+
+This allows to easily test the container locally without having to setup a full Laravel application.
+
+One approach you could be using for testing configuration changes is the following:
+
+### 1. Build the container locally
+
+```bash
+docker build . -t laravel-nginx-local
+```
+
+### 2. Run the container with a bash prompt
+
+```bash
+docker run -it laravel-nginx-local bash
+```
+
+### 3. Start supervisord
+
+Inside the bash prompt within the container:
+
+```bash
+supervisord -c /etc/supervisor.d/supervisord.ini -l /var/log/supervisord.log -j /var/run/supervisord.pid;
+```
+
+This should already show if you are able to start php-fpm and nginx correctly.
+
+### 4. Run another bash prompt in the container
+
+In another terminal you can get the container id with:
+
+```bash
+docker ps
+```
+
+Then you can run another bash terminal inside the same container with:
+
+```bash
+docker exec -it <container_id> bash
+````
+
+In this new shell you could for instance run:
+
+```bash
+curl -vvv localhost
+```
+
+To see if nginx is able to connect to php-fpm and render the sample `index.php` page.
 
 
 ## Contributing

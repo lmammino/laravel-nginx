@@ -1,13 +1,14 @@
 #!/usr/bin/env bash
-set -ev;
+set -eu;
 
 # Refresh cache to reload env vars
 # needed to make sure environment variables passed to docker are actually loaded
 php artisan optimize:clear;
 php artisan config:cache;
 
-# If APP_ENV is "local" then allows dev dependencies (e.g. debug bar)
-if [ "$APP_ENV" == "local" ]; then
+# If INSTALL_DEV_DEPS_AT_RUNTIME is set then allows dev dependencies (e.g. debug bar)
+# and run `yarn run dev`
+if [ -n "$INSTALL_DEV_DEPS_AT_RUNTIME" ]; then
   echo "Running composer install and yarn run dev (\$APP_ENV=$APP_ENV)";
   composer install --optimize-autoloader;
   yarn run dev;

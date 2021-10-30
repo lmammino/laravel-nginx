@@ -34,23 +34,25 @@ COPY ./config/supervisord.ini /etc/supervisor.d/supervisord.ini
 
 # Configure php-fpm
 RUN mkdir -p /run/php/ && touch /run/php/php8.0-fpm.pid && touch /run/php/php8.0-fpm.sock
-COPY ./config/php-fpm.conf /usr/local/etc/php/php-fpm.conf
+COPY ./config/php-fpm.conf ./config/php.ini /usr/local/etc/php/
 
 # Configure nginx
-COPY ./config/nginx.conf /etc/nginx/nginx.conf
-COPY ./config/fastcgi-php.conf /etc/nginx/fastcgi-php.conf
+COPY ./config/nginx.conf ./config/fastcgi-php.conf /etc/nginx/
 RUN mkdir -p /run/nginx/ \
   && touch /run/nginx/nginx.pid \
-  && ln -sf /dev/stdout /var/log/nginx/access.log \
-  && ln -sf /dev/stderr /var/log/nginx/error.log
+  && chown -R www-data:www-data /tmp/ /var/ /run
 
 
 # Copy php sources (will be replaced with a volume if in dev mode)
 WORKDIR /app
+COPY ./config/index.php /app/public/index.php
 
 # Copy start script
-COPY ./config/start.sh /usr/bin/start_app
-RUN chmod +x /usr/bin/start_app
+COPY ./config/*.sh /usr/bin/
+RUN chmod +x /usr/bin/start.sh /usr/bin/nginx-healthcheck.sh
 
 EXPOSE 80
-CMD start_app
+CMD start.sh
+USER www-data
+
+HEALTHCHECK CMD ["nginx-healthcheck.sh"]
