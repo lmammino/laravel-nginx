@@ -36,16 +36,16 @@ COPY ./config/supervisord.ini /etc/supervisor.d/supervisord.ini
 RUN mkdir -p /run/php/ && touch /run/php/php8.0-fpm.pid && touch /run/php/php8.0-fpm.sock
 COPY ./config/php-fpm.conf ./config/php.ini /usr/local/etc/php/
 
+WORKDIR /app
+
 # Configure nginx
 COPY ./config/nginx.conf ./config/fastcgi-php.conf /etc/nginx/
 RUN mkdir -p /run/nginx/ \
   && touch /run/nginx/nginx.pid \
-  && chown -R www-data:www-data /tmp/ /var/ /run
-
+  && chown -R www-data:www-data /app/ /tmp/ /var/ /run/
 
 # Copy php sources (will be replaced with a volume if in dev mode)
-WORKDIR /app
-COPY ./config/index.php /app/public/index.php
+COPY --chown=www-data ./config/index.php /app/public/index.php
 
 # Copy start script
 COPY ./config/*.sh /usr/bin/
