@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -eu;
+set -e;
 
 # Refresh cache to reload env vars
 # needed to make sure environment variables passed to docker are actually loaded
